@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Trans-EKMA Qingdao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.mobile.css" />
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <div class="header-text">
+        <h1>Trans-EKMA <span class="header-city">Qingdao</span></h1>
+        <p>O&#8323;&#8211;NO&#8339;&#8211;VOC Regime Diagnosis &#8226; Site Evolution &#8226; Policy Sandbox</p>
+      </div>
+      <div class="header-badges">
+        <span class="h-badge">2021&#8211;2025</span>
+        <span class="h-badge">Photochemical Model</span>
+      </div>
+    </div>
+    <div class="header-deco"></div>
+  </header>
+
+  <nav>
+    <button onclick="reloadTo('diagram')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4m-2.93-7.07-2.83 2.83m-8.48 8.48-2.83 2.83m0-14.14 2.83 2.83m8.48 8.48 2.83 2.83"/></svg>
+      Diagram
+    </button>
+    <button onclick="reloadTo('evolution')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+      Evolution
+    </button>
+    <button onclick="reloadTo('sandbox')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      Sandbox
+    </button>
+    <button onclick="reloadTo('method')">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Method
+    </button>
+  </nav>
+
+  <main>
+    <!-- ==================== Diagram ==================== -->
+    <section id="diagram" class="page active">
+      <h2>
+        <span class="h2-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4"/></svg>
+        </span>
+        Trans-EKMA Diagnostic Diagram
+      </h2>
+      <div class="controls-row">
+        <span class="site-badge">Qingdao City Average</span>
+        <select id="siteSelect" multiple size="1" style="display:none;">
+          <option value="QD_AVE" selected>Qingdao City Average</option>
+        </select>
+        <div class="year-control">
+          <span class="control-label">Year</span>
+          <button id="yearPlayBtn" class="play-btn" title="Auto-play years">&#9654;</button>
+          <input id="yearRange" type="range" min="2021" max="2025" value="2025" />
+          <span id="yearVal">2025</span>
+        </div>
+      </div>
+      <div id="diagramInfo" class="info-card" style="display:none;">
+        <div class="info-item info-nox">
+          <div class="info-icon-wrap nox">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div class="info-text">
+            <span class="info-label">24h NOx</span>
+            <span id="infoNOx" class="info-value">--</span>
+            <span class="info-unit">ppb</span>
+          </div>
+        </div>
+        <div class="info-item info-o3">
+          <div class="info-icon-wrap o3">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+          </div>
+          <div class="info-text">
+            <span class="info-label">Daily O&#8323; Range</span>
+            <span id="infoO3" class="info-value">--</span>
+            <span class="info-unit">ppb</span>
+          </div>
+        </div>
+        <div class="info-item info-trend">
+          <div class="info-icon-wrap trend">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg>
+          </div>
+          <div class="info-text">
+            <span class="info-label">YoY NOx Change</span>
+            <span id="infoTrend" class="info-value">--</span>
+          </div>
+        </div>
+      </div>
+      <div id="plot" class="chart-container">
+        <div class="loading-overlay" id="plotLoading"><div class="spinner"></div>Loading TEKMA grid...</div>
+      </div>
+    </section>
+
+    <!-- ==================== Evolution ==================== -->
+    <section id="evolution" class="page">
+      <h2>
+        <span class="h2-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+        </span>
+        Site Evolution Analysis
+      </h2>
+      <div class="controls-row">
+        <span class="site-badge">Qingdao City Average</span>
+        <select id="evoSiteSelect" multiple size="1" style="display:none;">
+          <option value="QD_AVE" selected>Qingdao City Average</option>
+        </select>
+        <div class="year-control">
+          <span class="control-label">Year range</span>
+          <input id="evoYearMin" type="number" min="2021" max="2025" value="2021" style="width:5rem;" />
+          <span style="color:#b0bec5;">&ndash;</span>
+          <input id="evoYearMax" type="number" min="2021" max="2025" value="2025" style="width:5rem;" />
+        </div>
+      </div>
+      <div class="grid-two">
+        <div class="col">
+          <h3>Trajectory on Trans-EKMA space</h3>
+          <div id="evoPlot" class="chart-container">
+            <div class="loading-overlay" id="evoPlotLoading"><div class="spinner"></div>Loading...</div>
+          </div>
+        </div>
+        <div class="col">
+          <h3>Time series (24h NO&#8339; &amp; Daily O&#8323; range)</h3>
+          <div id="evoTime" class="chart-container">
+            <div class="loading-overlay" id="evoTimeLoading"><div class="spinner"></div>Loading...</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== Sandbox ==================== -->
+    <section id="sandbox" class="page">
+      <h2>
+        <span class="h2-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </span>
+        Policy Scenario Sandbox
+      </h2>
+      <div class="controls-row">
+        <label class="radio-pill"><input type="radio" name="sbSource" value="site" checked /><span>From site &amp; year</span></label>
+        <label class="radio-pill"><input type="radio" name="sbSource" value="manual" /><span>Manual input</span></label>
+      </div>
+
+      <div id="sbSiteYear" class="controls-row">
+        <span class="site-badge">Qingdao City Average</span>
+        <select id="sbSiteSelect" style="display:none;">
+          <option value="QD_AVE" selected>Qingdao City Average</option>
+        </select>
+        <div class="year-control">
+          <span class="control-label">Year</span>
+          <input id="sbYearRange" type="range" min="2021" max="2025" value="2025" />
+          <span id="sbYearVal">2025</span>
+        </div>
+      </div>
+
+      <div id="sbManual" class="controls-row" style="display:none;">
+        <label>24h NO&#8339;:
+          <input id="sbNOxInput" type="number" step="0.01" placeholder="e.g., 35" />
+        </label>
+        <label>Daily O&#8323; range:
+          <input id="sbO3Input" type="number" step="0.01" placeholder="e.g., 65" />
+        </label>
+      </div>
+
+      <div class="controls-row factor-row">
+        <div class="factor-group">
+          <span class="control-label">VOC factor</span>
+          <input id="vocSlider" type="range" min="0.05" max="3" step="0.05" value="1.0" />
+          <input id="vocFactorInput" type="number" value="1.0" step="0.05" style="width:70px;">
+        </div>
+        <div class="factor-group">
+          <span class="control-label">NOx factor</span>
+          <input id="noxSlider" type="range" min="0.05" max="3" step="0.05" value="1.0" />
+          <input id="noxFactorInput" type="number" value="1.0" step="0.05" style="width:70px;">
+        </div>
+        <button id="resetFactors" class="reset-btn" title="Reset to 1.0">Reset</button>
+      </div>
+
+      <div id="sandboxPlot" class="chart-container">
+        <div class="loading-overlay" id="sandboxLoading"><div class="spinner"></div>Loading...</div>
+      </div>
+    </section>
+
+    <!-- ==================== Method ==================== -->
+    <section id="method" class="page">
+      <h2>
+        <span class="h2-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </span>
+        Method &amp; Data
+      </h2>
+
+      <div class="method-card mc-framework">
+        <div class="mc-accent"></div>
+        <div class="mc-body">
+          <h3>Trans-EKMA Framework</h3>
+          <p>
+            Trans-EKMA uses a photochemical box model to simulate ozone formation under
+            combinations of VOC and NOx emissions. These simulations generate background VOC and
+            NOx isopleths, forming a modeled NOx&#8211;O&#8323; diagnostic space. Routine observations of NOx
+            and the daily ozone amplitude are then placed onto this diagram to
+            determine whether ozone formation is NOx-limited or VOC-limited, and to visualize how
+            precursor conditions may have shifted over time.
+          </p>
+        </div>
+      </div>
+
+      <div class="method-card mc-impl">
+        <div class="mc-accent"></div>
+        <div class="mc-body">
+          <h3>Qingdao Implementation</h3>
+          <p>
+            This Qingdao version applies the Trans-EKMA framework using local meteorology
+            (pressure, temperature, humidity, boundary-layer height) and regional VOC reactivity
+            profiles. City-average observations (2021&#8211;2025) are overlaid to show regimes and trends.
+          </p>
+          <div class="feature-grid">
+            <div class="feature-item fi-diagram">
+              <div class="fi-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4m-10-10h4m12 0h4"/></svg>
+              </div>
+              <div>
+                <strong>Diagram</strong>
+                <p>Select year to place the city-average point on the background and read the current regime.</p>
+              </div>
+            </div>
+            <div class="feature-item fi-evolution">
+              <div class="fi-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+              </div>
+              <div>
+                <strong>Evolution</strong>
+                <p>View multi-year trajectory, including leftward NOx-reduction signals and crossings of VOC isolines.</p>
+              </div>
+            </div>
+            <div class="feature-item fi-sandbox">
+              <div class="fi-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div>
+                <strong>Sandbox</strong>
+                <p>Apply VOC/NOx factors to explore &#8220;what-if&#8221; scenarios and see how ozone formation may shift.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="method-card mc-cite">
+        <div class="mc-accent"></div>
+        <div class="mc-body">
+          <h3>Developers &amp; Citation</h3>
+          <p>
+            Developed by the Environmental Research Team at the Hong Kong University of Science and Technology (HKUST).
+          </p>
+          <div class="cite-links">
+            <a href="https://envrwangz.people.ust.hk/" target="_blank" class="cite-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Team page
+            </a>
+            <a href="https://pubs.acs.org/doi/full/10.1021/acs.est.2c08205" target="_blank" class="cite-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Guo et al. (2023) <em>Environ. Sci. Technol.</em>
+            </a>
+          </div>
+          <p class="contact-line">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            jiaguo@ust.hk
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Powered by Trans-EKMA Framework &bull; HKUST Environmental Research Team</p>
+  </footer>
+
+  <script src="https://cdn.plot.ly/plotly-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="tekma.js"></script>
+  <script src="sites.js"></script>
+  <script src="script.js"></script>
+  <script src="script.mobile.js"></script>
+  <script src="enhancements.js"></script>
+</body>
+</html>

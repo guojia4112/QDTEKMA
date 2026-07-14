@@ -1,0 +1,7 @@
+/* style.mobile.css — minimal mobile additive overrides */
+
+@media (max-width: 768px) {
+  /* Horizontal scroll for nav on narrow screens */
+  nav { -webkit-overflow-scrolling: touch; }
+  nav::-webkit-scrollbar { display: none; }
+}
